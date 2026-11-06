@@ -1,0 +1,7 @@
+'use strict';const {test}=require('node:test');const assert=require('node:assert/strict');const p=require('../core');
+const base={version:1,courses:[{id:'a',name:'Basis Data',day:0,start:'08:00',end:'10:00',location:'A'}],tasks:[{id:'t',title:'Laporan',due:'2026-11-30',done:false,courseId:'a'}]};
+test('jadwal bentrok hanya pada hari yang sama dengan waktu tumpang tindih',()=>{let a=base.courses[0];assert.equal(p.conflict(a,{day:0,start:'09:00',end:'11:00'}),true);assert.equal(p.conflict(a,{day:0,start:'10:00',end:'11:00'}),false);assert.equal(p.conflict(a,{day:1,start:'09:00',end:'11:00'}),false)});
+test('backup dapat divalidasi dan dibaca kembali',()=>{assert.deepEqual(p.validate(JSON.parse(JSON.stringify(base))),base)});
+test('backup invalid, duplikat dan relasi hilang ditolak',()=>{assert.throws(()=>p.validate({...base,tasks:[{...base.tasks[0],courseId:'missing'}]}));assert.throws(()=>p.validate({...base,tasks:[base.tasks[0],base.tasks[0]]}));assert.throws(()=>p.validate({...base,courses:[{...base.courses[0],start:'10:00',end:'08:00'}]}))});
+test('backup dengan dua jadwal bertabrakan ditolak',()=>assert.throws(()=>p.validate({...base,courses:[...base.courses,{...base.courses[0],id:'b',start:'09:00',end:'11:00'}]})));
+test('tanggal memeriksa hari dan tahun kabisat',()=>{assert.equal(p.dateOK('2024-02-29'),true);assert.equal(p.dateOK('2025-02-29'),false);assert.equal(p.dateOK('2026-13-01'),false)});
