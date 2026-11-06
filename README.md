@@ -21,7 +21,7 @@ Penyimpanan browser dapat hilang atau tidak tersedia, termasuk saat data situs d
 
 ## Kontribusi
 
-Jelaskan masalah yang direproduksi dan jalankan `npm test` sebelum mengusulkan perubahan. Jangan memasukkan data mahasiswa asli ke contoh atau laporan publik. Lisensi MIT.
+Lihat [CONTRIBUTING.md](CONTRIBUTING.md) untuk cara melaporkan masalah dan menjalankan tes. Jangan memasukkan data mahasiswa asli ke contoh atau laporan publik. Lisensi MIT.
 
 ## English summary
 
